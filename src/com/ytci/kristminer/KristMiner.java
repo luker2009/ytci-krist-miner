@@ -89,9 +89,13 @@ public class KristMiner {
                                     setSendingSolution(true);
                                 }
                                 System.out.println("Solved! Nonce: " + id + nonceStr);
+                                String hashHex = Long.toHexString(hashNum);
+                                hashHex = ("000000000000" + hashHex).substring(hashHex.length());
+                                System.out.println("Hash: " + hashHex);
                                 KristMiner.pause(true);
                                 KristMiner.addBlocksDone(1);
                                 KristMiner.submitBlock(id + nonceStr);
+                                KristMiner.blockChanged(hashHex);
                                 break;
                             }
                         }
@@ -217,7 +221,6 @@ public class KristMiner {
         			}
         			long sleepTime = updateMS - (System.currentTimeMillis() - lastTime);
         			if(sleepTime > 0)
-        				System.out.println("Sleeping " + sleepTime);
         				Thread.sleep(sleepTime);
         		}
         	} catch(Exception e) {
